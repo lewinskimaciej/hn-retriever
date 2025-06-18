@@ -1,3 +1,5 @@
+using HnStoriesRetriever.HackerNews;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +8,12 @@ builder.Services.AddOpenApi();
 
 // ideally use other distributed cache later on but In Memory is fine for now
 builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddHttpClient<HnHttpClient>(opt =>
+{
+    opt.BaseAddress = new Uri("https://hacker-news.firebaseio.com/v0/");
+});
+
 
 var app = builder.Build();
 
