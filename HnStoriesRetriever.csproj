@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="HackerNewsPr\HnHttpClient.cs">
+        <Link>HackerNews\HnHttpClient.cs</Link>
+      </Compile>
+      <Compile Update="HackerNewsPr\Models\Item.cs">
+        <Link>HackerNews\Models\Item.cs</Link>
+      </Compile>
+    </ItemGroup>
+
+</Project>
