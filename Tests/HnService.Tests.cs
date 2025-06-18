@@ -17,7 +17,9 @@ public class HnServiceTests
         By = $"user{id}",
         Time = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
         Score = Random.Shared.Next(0, 10_000),
-        Descendants = Random.Shared.Next(0, 1_000)
+        Descendants = Random.Shared.Next(0, 1_000),
+        Kids = [],
+        Type = "story"
     };
 
     [Fact]

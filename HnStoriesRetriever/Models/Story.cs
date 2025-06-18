@@ -2,11 +2,11 @@ namespace HnStoriesRetriever.Models;
 
 public record Story
 {
-  [JsonPropertyName("title")] public string Title { get; set; }
+  [JsonPropertyName("title")] public required string Title { get; set; }
 
-  [JsonPropertyName("uri")] public string Uri { get; set; }
+  [JsonPropertyName("uri")] public required string? Uri { get; set; }
 
-  [JsonPropertyName("postedBy")] public string PostedBy { get; set; }
+  [JsonPropertyName("postedBy")] public required string PostedBy { get; set; }
 
   [JsonPropertyName("time")] public DateTimeOffset Time { get; set; }
 
