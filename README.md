@@ -47,11 +47,12 @@ I would assume that Best Stories and comment counts don't change that often and 
  - I warm-up the cache on application start to avoid returning empty list on first calls. Downside is that the startup takes a bit longer.
  
 
-To further improve performance we could:
+Potential changes:
    - Set `ThreadPool.SetMinThreads(Int32, Int32)` to a reasonable amount to allow creation of threads without default 500ms delay - this would especially help with bursty traffic.
    - Use different caching(f.e. distributed redis cache) to allow horizontal scaling, would go along with Redlock for distributed rate limiting instead of a simple Semaphore
    - Remove/optimize LINQ calls which I kept for simplicity
    - Potential retry policies for Http calls
+   - Consider updating Best Stories more often than once a minute
 
 ## k6.io
 I have added a simple k6.io test to check performance.
