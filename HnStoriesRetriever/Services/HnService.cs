@@ -30,8 +30,9 @@ public class HnService : IHnService
 
     return itemTasks
       .Select(task => task.Result)
-      .Where(story => story != null)
+      .Where(item => item != null)
       .Cast<HnItem>()
+      .OrderByDescending(item => item.Score)
       .Select(MapItemToStory);
   }
 
