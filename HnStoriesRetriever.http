@@ -1,6 +1,0 @@
-@HnStoriesRetriever_HostAddress = http://localhost:5107
-
-GET {{HnStoriesRetriever_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
