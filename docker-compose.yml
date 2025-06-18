@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  hn-api:
+    build:
+      context: ./HnStoriesRetriever
+      dockerfile: Dockerfile
+    ports:
+      - "5107:5107"
+    environment:
+      - ASPNETCORE_URLS=http://+:5107
