@@ -1,3 +1,5 @@
+using HnStoriesRetriever.Cron;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +9,7 @@ builder.Services.AddOpenApi();
 // ideally use other distributed cache later on but In Memory is fine for now
 builder.Services.AddDistributedMemoryCache();
 
-builder.Services.AddHttpClient<HnHttpClient>((services, client) =>
+builder.Services.AddHttpClient<IHnHttpClient, HnHttpClient>((services, client) =>
 {
   var baseAddress = services.GetRequiredService<IConfiguration>().GetValue<string>("HackerNewsApiBaseAddress");
   if (baseAddress is null)
@@ -20,9 +22,7 @@ builder.Services.AddHttpClient<HnHttpClient>((services, client) =>
 
 builder.Services.AddSingleton<IHnService, HnService>();
 
-// possibly use assembly scanning to register queries and services like Scrutor, manual is fine for now
-builder.Services.AddTransient<IGetBestStoriesQuery, GetBestStoriesQuery>();
-builder.Services.AddTransient<IGetItemQuery, GetItemQuery>();
+builder.Services.AddHostedService<HnCacheRefreshingJob>();
 
 var app = builder.Build();
 
@@ -34,14 +34,9 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/best-stories", async (IHnService hnService, [Range(1, 500)]int? topCount) =>
 {
-  var stories = await hnService.GetBestStoriesAsync(topCount);
-  return Results.Ok(stories);
+  return Results.Ok(hnService.Get(topCount));
 });
 
 app.UseHttpsRedirection();
-
-// trigger retrieval to warm up cache
-var hnService = app.Services.GetRequiredService<IHnService>();
-_ = hnService.GetBestStoriesAsync();
 
 app.Run();

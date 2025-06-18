@@ -1,39 +1,40 @@
 namespace HnStoriesRetriever.Services;
 
-public class HnService : IHnService
+public class HnService(IHnHttpClient client) : IHnService
 {
-  private readonly IGetBestStoriesQuery _getBestStoriesQuery;
-  private readonly IGetItemQuery _getItemQuery;
+  private readonly IHnHttpClient _client = client ?? throw new ArgumentNullException(nameof(client));
+  // we could use MemoryCache or DistributedCache but this will be faster and there's not that much data anyway
+  private ICollection<Story> _cachedStories = [];
 
-  public HnService(IGetBestStoriesQuery getBestStoriesQuery, IGetItemQuery getItemQuery)
+  public IEnumerable<Story> Get(int? count)
   {
-    _getBestStoriesQuery = getBestStoriesQuery;
-    _getItemQuery = getItemQuery;
+    return  count.HasValue ? _cachedStories.Take(count.Value) : _cachedStories;
   }
 
-  public async Task<IEnumerable<Story>> GetBestStoriesAsync(int? topCount = null)
+  public async Task<IEnumerable<Story>> RefreshList(CancellationToken cancellationToken = default)
   {
-    var bestStories = (await _getBestStoriesQuery.Handle()).ToList();
-    var storiesCount = bestStories.Count;
-
-    IEnumerable<long> storiesToTake = bestStories;
-    if (topCount.HasValue)
+    var bestStories = await _client.GetBestStoriesAsync(cancellationToken);
+    if (bestStories == null)
     {
-      storiesToTake = storiesToTake.Take(Math.Min(topCount.Value, storiesCount));
+      return [];
     }
 
-    var itemTasks = storiesToTake
-      .Select(storyId => _getItemQuery.Handle(storyId))
+    var itemTasks = bestStories
+      .Select(storyId => _client.GetItemAsync(storyId, cancellationToken))
       .ToList();
 
     await Task.WhenAll(itemTasks);
-
-    return itemTasks
+    
+    var mappedItems = itemTasks
       .Select(task => task.Result)
       .Where(item => item != null)
       .Cast<HnItem>()
       .OrderByDescending(item => item.Score)
       .Select(MapItemToStory);
+    
+    _cachedStories = mappedItems.ToList();
+    
+    return _cachedStories;
   }
 
   private static Story MapItemToStory(HnItem item)

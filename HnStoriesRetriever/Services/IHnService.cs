@@ -2,5 +2,6 @@ namespace HnStoriesRetriever.Services;
 
 public interface IHnService
 {
-  Task<IEnumerable<Story>> GetBestStoriesAsync(int? topCount = null);
+  IEnumerable<Story> Get(int? count);
+  Task<IEnumerable<Story>> RefreshList(CancellationToken cancellationToken = default);
 }

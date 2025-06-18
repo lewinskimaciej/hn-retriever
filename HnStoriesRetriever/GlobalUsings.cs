@@ -11,7 +11,6 @@ global using System.Text.Json.Serialization;
 global using HnStoriesRetriever.HackerNews;
 global using HnStoriesRetriever.HackerNews.Models;
 global using HnStoriesRetriever.Models;
-global using HnStoriesRetriever.Queries;
 global using HnStoriesRetriever.Services;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.Caching.Distributed;

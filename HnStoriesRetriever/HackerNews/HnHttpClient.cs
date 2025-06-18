@@ -1,7 +1,7 @@
 namespace HnStoriesRetriever.HackerNews;
 
 // todo: possibly add Polly for retries
-public class HnHttpClient : HttpClient
+public class HnHttpClient : HttpClient, IHnHttpClient
 {
   private readonly HttpClient _httpClient;
   private readonly ILogger<HnHttpClient> _logger;
