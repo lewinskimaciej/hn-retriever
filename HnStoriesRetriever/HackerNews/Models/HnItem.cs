@@ -6,7 +6,7 @@ public record HnItem
 
   [JsonPropertyName("descendants")] public int Descendants { get; set; }
 
-  [JsonPropertyName("id")] public int Id { get; set; }
+  [JsonPropertyName("id")] public long Id { get; set; }
 
   [JsonPropertyName("kids")] public long[] Kids { get; set; }
 
