@@ -1,8 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using HnStoriesRetriever.HackerNews;
-using HnStoriesRetriever.Queries;
-using HnStoriesRetriever.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

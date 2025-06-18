@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace HnStoriesRetriever.HackerNews.Models;
 
 public record HnItem

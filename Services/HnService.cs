@@ -1,8 +1,3 @@
-using HnStoriesRetriever.HackerNews;
-using HnStoriesRetriever.HackerNews.Models;
-using HnStoriesRetriever.Models;
-using HnStoriesRetriever.Queries;
-
 namespace HnStoriesRetriever.Services;
 
 public class HnService : IHnService

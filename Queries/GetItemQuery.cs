@@ -1,10 +1,3 @@
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Text.Json;
-using HnStoriesRetriever.HackerNews;
-using HnStoriesRetriever.HackerNews.Models;
-using Microsoft.Extensions.Caching.Distributed;
-
 namespace HnStoriesRetriever.Queries;
 
 public interface IGetItemQuery

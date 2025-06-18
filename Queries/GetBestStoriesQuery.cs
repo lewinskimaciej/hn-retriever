@@ -1,5 +1,3 @@
-using HnStoriesRetriever.HackerNews;
-
 namespace HnStoriesRetriever.Queries;
 
 public interface IGetBestStoriesQuery

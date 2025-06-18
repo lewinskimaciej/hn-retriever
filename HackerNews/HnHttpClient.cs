@@ -1,5 +1,3 @@
-using HnStoriesRetriever.HackerNews.Models;
-
 namespace HnStoriesRetriever.HackerNews;
 
 // todo: possibly add Polly for retries

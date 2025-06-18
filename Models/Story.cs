@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace HnStoriesRetriever.Models;
 
 public record Story
